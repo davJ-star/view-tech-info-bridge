@@ -1,4 +1,4 @@
-# informationPlatform
+# ViewTechInfoBridge
 news and jernal and Thesis....
 
 ## apply github commit message
