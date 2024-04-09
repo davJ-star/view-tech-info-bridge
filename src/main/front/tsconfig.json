@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/setupTests.ts", "src/reportWebVitals.ts", "react-app-env.d.ts", "src/index.tsx"  ]
 }
