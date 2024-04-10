@@ -1,6 +1,7 @@
-import { Container, Form, Nav, Navbar } from 'react-bootstrap';
+import { Container, Form, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
 import { Outlet } from 'react-router-dom';
 
 const NavigationBarComponent = () => {
@@ -12,28 +13,35 @@ const NavigationBarComponent = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar
+        expand="lg"
+        className="bg-body-tertiary m-auto mt-3"
+        style={{ width: '95%', borderRadius: '30px' }}
+      >
         <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand href="#home">View Tech Info Bridge</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="flex justify-content-around w-100">
+            <Nav className="me-auto">
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="#link">News</Nav.Link>
               <Nav.Link href="#link">Thesis</Nav.Link>
-              <Nav.Item className="w-50">
-                <Form>
-                  <Form.Group>
-                    <Form.Control
-                      // TODO: animation
-                      type="text"
-                      placeholder="Trend AI에게 무엇이든 물어보세요"
-                      onChange={(event) => setKeyword(event.target.value)}
-                    />
-                  </Form.Group>
-                </Form>
-              </Nav.Item>
             </Nav>
+            <Form className="d-flex">
+              <Form.Group>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <IoSearch />
+                  </InputGroup.Text>
+                  <Form.Control
+                    // TODO: animation
+                    type="text"
+                    placeholder="Trend AI에게 무엇이든 물어보세요"
+                    onChange={(event) => setKeyword(event.target.value)}
+                  />
+                </InputGroup>
+              </Form.Group>
+            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
