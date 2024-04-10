@@ -30,32 +30,40 @@ const HomeScreen = () => {
         "\"울 엄마도 나도 20대 '리즈' 시절로 돌아갈 수 있다\"…'이것' 하나면 된다",
       body: "데뷔 62년차 ‘국민 배우’이자 ‘국민 엄마’ ‘국민 할매’ 나문희 씨가 영화 '수상한 그녀'처럼 20대 리...",
     },
+    {
+      title: '삼성페이 사용자 70% 삼성월렛으로 전환',
+      body: '삼성전자는 기존 삼성페이 사용자의 70% 이상이 삼성월렛으로 전환했다고 밝혔다. 삼성월렛 출...',
+    },
   ]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const handleNextNews = useCallback<() => void>(() => {
-    setCurrentIndex((currentIndex + 1) % news.length);
+    setCurrentIndex((currentIndex + 3) % news.length);
   }, [currentIndex, news.length]);
 
   const handlePrevNews = useCallback<() => void>(() => {
-    setCurrentIndex((currentIndex - 1 + news.length) % news.length);
+    setCurrentIndex((currentIndex - 3 + news.length) % news.length);
   }, [currentIndex, news.length]);
 
   console.log(currentIndex);
 
   return (
     <Container>
-      <Row className="justify-content-center">
-        <Col xs={12} md={8}>
+      <Row className="justify-content-center align-items-center">
+        <Col xs={2}>
+          <Button
+            variant="outline-secondary"
+            onClick={handlePrevNews}
+            className="d-block mx-auto"
+          >
+            <FaCaretLeft />
+          </Button>
+        </Col>
+        <Col xs={8} md={8}>
           <Card>
             <Card.Body>
-              <Row className="align-items-center">
-                <Col xs={2}>
-                  <Button variant="outline-secondary" onClick={handlePrevNews}>
-                    <FaCaretLeft />
-                  </Button>
-                </Col>
-                <Col xs={8} className="text-center">
+              <Row>
+                <Col xs={4} className="text-center">
                   <Card.Title
                     dangerouslySetInnerHTML={{
                       __html: news[currentIndex].title,
@@ -67,14 +75,42 @@ const HomeScreen = () => {
                     }}
                   />
                 </Col>
-                <Col xs={2}>
-                  <Button variant="outline-secondary" onClick={handleNextNews}>
-                    <FaCaretRight />
-                  </Button>
+                <Col xs={4} className="text-center">
+                  <Card.Title
+                    dangerouslySetInnerHTML={{
+                      __html: news[currentIndex + 1].title,
+                    }}
+                  />
+                  <Card.Body
+                    dangerouslySetInnerHTML={{
+                      __html: news[currentIndex + 1].body,
+                    }}
+                  />
+                </Col>
+                <Col xs={4} className="text-center">
+                  <Card.Title
+                    dangerouslySetInnerHTML={{
+                      __html: news[currentIndex + 2].title,
+                    }}
+                  />
+                  <Card.Body
+                    dangerouslySetInnerHTML={{
+                      __html: news[currentIndex + 2].body,
+                    }}
+                  />
                 </Col>
               </Row>
             </Card.Body>
           </Card>
+        </Col>
+        <Col xs={2}>
+          <Button
+            variant="outline-secondary"
+            onClick={handleNextNews}
+            className="d-block mx-auto"
+          >
+            <FaCaretRight />
+          </Button>
         </Col>
       </Row>
     </Container>
