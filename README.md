@@ -28,9 +28,28 @@ news and jernal and Thesis....
 ## 아키텍처
 
 ![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
+```
+유저는 데스크탑 또는 모바일을 통해 웹 페이지를 접속할 수 있습니다. 이때 이용한 프론트엔드 기술은 React 입니다.
+React 라이브러리 Bootstrap, material ui, Axios 사용했습니다.
+```
 
+
+![alt text](image-3.png)
+```
+유저가 보낸 서비스 요청과 반환을 책임지는 백엔드 기술은 Spring Boot 입니다.
+Spring Boot 라이브러리 Mapstruct, Lombok, JPA 사용했습니다.
+```
+![alt text](image-4.png)
+```
+Spring Boot의 세부 로직을 간단하게 표현한 것입니다.
+사용자가 보낸 정보를 Controller에 의해 적합한 Service 계층에 보내어 데이터를 가공하고 반환합니다.
+```
+
+```
+Spring Boot가 구현해야 할 핵심의 기능은 스케줄러 1시간마다 API 호출하여 얻은 정보를 가공한 후 AI Controller에 보내어 AI 구동시킵니다. 
+
+그리고 AI 결과값(가짜 뉴스 판별 결과)을 데이터베이스에 업데이트하는 것입니다. 이로써 사용자가 원하는 정보를 얻을 수 있도록 아키텍처를 설계했습니다.
+```
 ![alt text](image-5.png)
 ![alt text](image-6.png)
 ![alt text](image-7.png)
