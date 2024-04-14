@@ -9,6 +9,10 @@ news and jernal and Thesis....
 
 과학기술 분야 중 IT 관련 분야에 집중하며, LLM를 이용해 의문점을 해소하고 정보를 습득할 수 있다. 또한 제공하는 LLM은 과학기술 분야에 특화되어 있기에 거짓 뉴스를 예측하고 알려준다. 거짓 뉴스인 이유를 파악하고 판별한다.(뉴스 글을 읽으면서 AI와 대화하는 방식으로 정보를 습득하는데 도움이 많이 된다. 또한 AI는 무분별한 낚시성 뉴스로 정보 취합하는 데 방해가 되지 않도록 정보를 알려준다.)
 
+**기술 스택 추가 예정**
+
+[![My Skills](https://skillicons.dev/icons?i=ts,react,spring,py)](https://skillicons.dev)
+
 ## 기능(상세 요구 사항)
 
 ![alt text](image-12.png)
