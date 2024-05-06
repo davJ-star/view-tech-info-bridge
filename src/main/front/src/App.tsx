@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home } from './screens';
+import { Home, NaverNews } from './screens';
 import { NavigationBar } from './component';
 
 const App = () => {
@@ -7,6 +7,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<NavigationBar />}>
         <Route index element={<Home />} />
+        <Route path="/naver" element={<NaverNews />} />
       </Route>
     </Routes>
   );

@@ -1,3 +1,4 @@
 import Home from './home';
+import NaverNews from './naver';
 
-export { Home };
+export { Home, NaverNews };
