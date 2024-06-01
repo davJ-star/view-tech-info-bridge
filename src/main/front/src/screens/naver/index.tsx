@@ -1,57 +1,68 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useCallback } from 'react'
+import axios from 'axios'
 
 function NaverNewsScreen() {
-  const [hello, sethello] = useState('');
-  const [data, setdata] = useState<{ title: string }>({
-    title: '',
-  });
-  const [news, setNews] = useState<
+  const [keyword, setKeyword] = useState('')
+  const [news, setNews] = useState<NewsArticle[]>([]) // Use NewsArticle type
+
+  interface NewsArticle {
+    title: string
+    description: string
+    link: string
+  }
+
+  const dummyData: NewsArticle[] = [
     {
-      title: string;
-      link: string;
-      description: string;
-    }[]
-  >([
-    {
-      title: '',
-      link: '',
-      description: '',
+      title: '제목1',
+      description: '설명1',
+      link: 'https://www.example1.com',
     },
-  ]);
-  const [keyword, setKeyword] = useState<string>('');
+    {
+      title: '제목2',
+      description: '설명2',
+      link: 'https://www.example2.com',
+    },
+    {
+      title: '제목3',
+      description: '설명3',
+      link: 'https://www.example3.com',
+    },
+  ]
+
+  const onClickGetNews = useCallback(() => {
+    // Replace with your actual backend API URL
+    axios.get(`/api/getnews/${keyword}`).then((res) => setNews(res.data))
+
+    // Uncomment the following line to use dummy data instead of API call
+    setNews(dummyData)
+  }, [keyword])
 
   useEffect(() => {
-    //
-    // axios.get('/api/test').then((res) => {
-    //   sethello(res.data);
-    // });
-    // axios.get('/api/v1/dump/getData').then((res) => {
-    //   setdata(res.data);
-    // });
-    return () => {};
-  }, []);
-
-  const onClick_getNews = useCallback<() => void>(() => {
-    axios.get(`/api/getnews/${keyword}`).then((res) => setNews(res.data));
-  }, [keyword]);
-
-  // console.log(data);
-  console.log(news);
+    // Fetch initial news data
+    onClickGetNews()
+  }, [keyword])
 
   return (
     <div className="App">
-      {/* <p>백엔드 데이터: {hello}</p>
-      <p>백엔드 데이터1 from database : {data.title} </p> */}
-
-      <hr />
       <input
+        type="text"
         placeholder="키워드"
+        value={keyword}
         onChange={(event) => setKeyword(event.target.value)}
       />
-      <button onClick={onClick_getNews}>CALL NEWS</button>
+      <button onClick={onClickGetNews}>뉴스 검색</button>
+      <ul>
+        {news.map((article) => (
+          <li key={article.link}>
+            <a href={article.link} target="_blank" rel="noreferrer">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  )
 }
 
-export default NaverNewsScreen;
+export default NaverNewsScreen
