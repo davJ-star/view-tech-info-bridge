@@ -1,10 +1,10 @@
-export interface NewsArticle {
+export interface Thesis {
   title: string
   description: string
   link: string
 }
 
-export const dummyData: NewsArticle[] = [
+export const dummyData: Thesis[] = [
   {
     title: '제목1',
     description: '설명1',

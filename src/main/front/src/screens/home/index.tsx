@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Button,
   Card,
@@ -6,59 +6,100 @@ import {
   Container,
   Form,
   InputGroup,
-  FormText,
+  FormControl, // Use FormControl instead of FormText
   Row,
-} from 'react-bootstrap' // Import necessary components
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa'
-import { NewsArticle, dummyData } from '../News/NewsArticle' // Import NewsArticle and dummyData
+} from 'react-bootstrap';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { NewsArticle, dummyData } from '../data/NewsArticle'; // Import NewsArticle and dummyData
+
+const MAX_IMAGE_WIDTH = 300; // Adjust as needed for desired image width
 
 const HomeScreen = () => {
-  const [prompt, setPrompt] = useState('')
-  const [news, setNews] = useState<NewsArticle[]>(dummyData) // Use dummyData initially
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [prompt, setPrompt] = useState('');
+  const [news, setNews] = useState<NewsArticle[]>(dummyData); // Use dummyData initially
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   // Fetch news data once on component mount
   useEffect(() => {
-    fetchNews()
-  }, [])
+    fetchNews();
+  }, []);
 
   const fetchNews = async () => {
     // Replace with your actual API call
-    const response = await fetch('/api/news')
-    const data = await response.json()
-    setNews(data)
-  }
+    const response = await fetch('/api/news');
+    const data = await response.json();
+    setNews(data);
+  };
 
   const handleNextNews = useCallback(() => {
-    setCurrentIndex((currentIndex + 3) % news.length)
-  }, [currentIndex, news.length])
+    setCurrentIndex((currentIndex + 3) % news.length);
+  }, [currentIndex, news.length]);
 
   const handlePrevNews = useCallback(() => {
-    setCurrentIndex((currentIndex - 3 + news.length) % news.length)
-  }, [currentIndex, news.length])
+    setCurrentIndex((currentIndex - 3 + news.length) % news.length);
+  }, [currentIndex, news.length]);
 
-  const handlePromptChange = (event: {
-    target: { value: React.SetStateAction<string> }
-  }) => {
-    setPrompt(event.target.value)
-  }
+  const handlePromptChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    setPrompt(event.target.value);
+  };
 
-  const handleSubmitPrompt = async (event: { preventDefault: () => void }) => {
-    event.preventDefault() // Prevent default form submission behavior
+  const handleSubmitPrompt = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent default form submission behavior
     // Implement logic to submit the prompt to your LLM API
-    console.log('Submitted prompt:', prompt) // Replace with actual API call
-    setPrompt('') // Clear prompt after submission
-  }
+    console.log('Submitted prompt:', prompt); // Replace with actual API call
+    setPrompt(''); // Clear prompt after submission
+  };
 
   return (
     <Container>
-      <Row className="justify-content-center align-items-center">
+      {/* News Carousel Section */}
+      <Row className="justify-content-center align-items-center" style={{ margin: '10px' }}>
+        <Col xs={2}>
+          <Button variant="outline-secondary" onClick={handlePrevNews} className="d-block mx-auto">
+            <FaCaretLeft />
+          </Button>
+        </Col>
+        <Col xs={8} md={8}>
+          <Card>
+            <Card.Body>
+              <Row>
+                {news
+                  .slice(currentIndex, currentIndex + 3)
+                  .map((article, index) => (
+                    <Col xs={4} key={index} className="text-center mb-3">
+                      <Card>
+                        <Card.Img
+                          variant="top"
+                          src={article.imageUrl || 'https://placehold.co/300x200'} // Default image if no imageUrl provided
+                          style={{ maxWidth: MAX_IMAGE_WIDTH, height: 'auto' }} // Maintain aspect ratio
+                        />
+                        <Card.Body>
+                          <Card.Title>{article.title}</Card.Title>
+                          <Card.Text>{article.description}</Card.Text>
+                          <Button variant="primary" href={article.url} target="_blank">
+                            더 보기
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xs={2}>
+          <Button variant="outline-secondary" onClick={handleNextNews} className="d-block mx-auto">
+            <FaCaretRight />
+          </Button>
+        </Col>
+      </Row>
+
+      {/* LLM Prompt Input Section */}
+      <Row className="justify-content-center align-items-center" style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translate(-50%, -50%)', borderRadius: '10px', padding: '15px' }}>
         <Col xs={12}>
-          {/* LLM Prompt Input Section */}
           <Form onSubmit={handleSubmitPrompt}>
             <InputGroup className="mb-3">
-              <InputGroup.Text>LLM 프롬프트:</InputGroup.Text>
-              <Form.Control // Use Form.Control instead of Input
+              <FormControl // Use FormControl instead of Input
                 as="textarea"
                 rows={3}
                 value={prompt}
@@ -69,54 +110,6 @@ const HomeScreen = () => {
               </Button>
             </InputGroup>
           </Form>
-        </Col>
-      </Row>
-
-      <Row className="justify-content-center align-items-center">
-        <Col xs={2}>
-          <Button
-            variant="outline-secondary"
-            onClick={handlePrevNews}
-            className="d-block mx-auto"
-          >
-            <FaCaretLeft />
-          </Button>
-        </Col>
-        <Col xs={8} md={8}>
-          {/* News Carousel Section (unchanged) */}
-          <Card>
-            <Card.Body>
-              <Row>
-                {news
-                  .slice(currentIndex, currentIndex + 3)
-                  .map((article, index) => (
-                    <Col xs={4} key={index} className="text-center">
-                      <Card.Title>
-                        <div
-                          dangerouslySetInnerHTML={{ __html: article.title }}
-                        />
-                      </Card.Title>
-                      <Card.Body>
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: article.description,
-                          }}
-                        />
-                      </Card.Body>
-                    </Col>
-                  ))}
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={2}>
-          <Button
-            variant="outline-secondary"
-            onClick={handleNextNews}
-            className="d-block mx-auto"
-          >
-            <FaCaretRight />
-          </Button>
         </Col>
       </Row>
     </Container>

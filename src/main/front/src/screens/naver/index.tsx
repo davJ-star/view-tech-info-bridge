@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 
-function NaverNewsScreen() {
+const NaverNewsScreen = () => {
   const [keyword, setKeyword] = useState('')
   const [news, setNews] = useState<NewsArticle[]>([]) // Use NewsArticle type
 
