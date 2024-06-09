@@ -1,2 +1,15 @@
 front/
 .gradle
+
+.env
+.venv
+
+env/
+venv/
+
+.env.local
+.env.development
+.env.test
+
+client_secret.json
+secrets.json
