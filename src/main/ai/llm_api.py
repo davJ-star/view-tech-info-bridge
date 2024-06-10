@@ -21,6 +21,6 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
 
-response = model.generate_content("중세시대 배경에서 의사의 삶에 대해 작성해줘.")
+response = model.generate_content("구글이 생성형 인공지능(AI) 개발을 지원하기 위한 오픈소스 도구 3종을 공개했다. 이에 대해 설명해줘")
 
 print(response.text)
